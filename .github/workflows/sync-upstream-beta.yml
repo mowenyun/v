@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Sync with Upstream
         id: sync
-        uses: aormsby/Fork-Sync-With-Upstream-action@v1.2
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
         with:
           target_branch: beta  # 你的 fork 的目标分支
           upstream_repo: cmliu/edgetunnel  # 上游仓库
