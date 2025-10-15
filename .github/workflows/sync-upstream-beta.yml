@@ -1,0 +1,25 @@
+name: Sync Upstream Beta to Beta
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # 每天 UTC 6:00（CDT 凌晨 1 点，基于 2025-10-15 02:45 AM CDT）
+  workflow_dispatch:  # 支持手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Sync with Upstream
+        id: sync
+        uses: aormsby/Fork-Sync-With-Upstream-action@v1.2
+        with:
+          target_branch: beta  # 你的 fork 的目标分支
+          upstream_repo: cmliu/edgetunnel  # 上游仓库
+          upstream_branch: beta  # 上游的 beta 分支
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+          test_mode: false
+      - name: Check Sync Status
+        if: steps.sync.outputs.has_new_commits == 'true'
+        run: echo "New commits synced to beta!"
